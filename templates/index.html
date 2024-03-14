@@ -1,11 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>The MBSA Server is Running</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Include Tailwind CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <!-- Include Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="min-h-screen bg-gray-200 p-10">
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white p-5 rounded shadow-lg">
+          <h1 class="text-xl font-semibold text-center mb-5 border-b pb-3">
+            Dashboard
+          </h1>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="p-4 bg-gray-100 rounded flex items-center">
+              <div class="text-lg">
+                <p>Battery</p>
+                <p>Voltage</p>
+              </div>
+              <div>
+                <p id="voltage" class="text-3xl font-bold p-10"></p>
+              </div>
+            </div>
+            <div
+              class="p-4 bg-gray-100 rounded flex justify-center items-center"
+            >
+              <i class="fas fa-battery-full fa-3x"></i>
+              <span class="text-3xl font-bold ml-2">100%</span>
+            </div>
+          </div>
+          <div class="mt-5 p-4 bg-gray-100 rounded">
+            <div class="flex justify-between items-center" id="chart-container">
+              <!-- Chart elements will be dynamically added here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Function to update voltage data
+      function updateVoltage() {
+        $.get("/get_voltage", function (data) {
+          $("#voltage").text(+data.voltage + "V");
+        });
+      }
+
+      // Update voltage every second
+      setInterval(updateVoltage, 500);
+    </script>
+  </body>
 </html>
